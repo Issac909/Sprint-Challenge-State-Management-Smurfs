@@ -15,16 +15,21 @@ export const fetchSmurfs = () => {
         axios
         .get("http://localhost:3333/smurfs")
         .then(res => {
-            console.log(res)
+            console.log('First axios call (GET)', res)
             dispatch({
                 type: FETCH_SUCCESS,
                 payload: res.data
-
+                })
             })
+            .catch(err => {
+                console.log(err.response)
+                dispatch({
+                    type: FETCH_FAILURE,
+                    payload: `${err.response.status} ${err.response.data}`
+                    })
             })
-            .catch(err => 
-                dispatch( {type: FETCH_FAILURE, payload: err.response}))
-        }
+                
+    }
 }
 
 export const addSmurfs = (smurf) => dispatch => {
@@ -32,7 +37,7 @@ export const addSmurfs = (smurf) => dispatch => {
     axios
         .post("http://localhost:3333/smurfs", smurf)
         .then(res => {
-            console.log(res)
+            console.log('Second axios request (POST)', res)
             dispatch({
                 type: ADDING_SMURF_SUCCESS,
                 payload: res.data

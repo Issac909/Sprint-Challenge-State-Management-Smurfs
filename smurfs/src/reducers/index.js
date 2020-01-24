@@ -1,33 +1,26 @@
 import { FETCHING_START, FETCH_SUCCESS, FETCH_FAILURE,ADDING_SMURFS, ADDING_SMURF_SUCCESS, ADDING_SMURF_FAILURE } from '../actions';
 
 const initialState ={
-    smurfs: [{
-        name: 'Papa Smurf',
-        age: 546,
-        height: 'Three apples tall',
-        id: Date.now()
-
-    }],
+    smurf: [],
     isFetching: false,
-    message: '',
     error: ''
 }
 
 export const reducer = (state = initialState, action ) => {
-    console.log('Action:', action.type, action.payload)
+    console.log('State:', state)
     switch( action.type ) {
 
         case FETCHING_START:
             return {
                 ...state,
                 isFetching: true,
-                message: action.payload
+                error: ''
             }
 
         case FETCH_SUCCESS:
             return {
-                message: '',
-                smurfs: action.payload,
+                error: '',
+                smurf: action.payload,
                 isFetching: false
             }
 
@@ -42,18 +35,19 @@ export const reducer = (state = initialState, action ) => {
         case ADDING_SMURFS:
             return {
                 ...state,
-                message: action.payload
+                isFetching: true
             };
 
         case ADDING_SMURF_SUCCESS:
             return {
-                message: 'Smurf had been added', 
-                smurfs: action.payload
+                isFetching: false,
+                smurf: action.payload
             }
 
         case ADDING_SMURF_FAILURE:
             return {
-                ...state, message: action.payload
+                ...state, 
+                error: action.payload
             };
 
         default: 

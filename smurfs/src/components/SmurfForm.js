@@ -4,7 +4,13 @@ import { addSmurfs } from '../actions';
 
 function SmurfForm(props) {
 
-    const [smurf, setSmurf] = useState({})
+    const [smurf, setSmurf] = useState({
+        name: '',
+        age: '',
+        height: ''
+    });
+    console.log(smurf);
+    console.log(props);
 
 
     const onChange = e =>{
@@ -17,24 +23,36 @@ function SmurfForm(props) {
 
     const onSubmit  = e => {
         e.preventDefault();
-        props.addSmurfs(smurf);
-        setSmurf({
-            name: '',
-            age: '',
-            height: ''
-        });
-
+        props.addSmurf(smurf)
     }
 
     return (
         <div>
             <form onSubmit = {onSubmit}>
                 <h2>Add Smurf</h2>
-                <input type='text' placeholder = 'name' name = 'name' value= {smurf.name} onChange = {onChange} />
-                <input type='number' placeholder = 'age' name = 'age' value= {smurf.age} onChange = {onChange} />
-                <input type='text' placeholder = 'height' name = 'height' value= {smurf.height} onChange = {onChange} />
+                <input 
+                    type='text' 
+                    placeholder = 'name' 
+                    name = 'name' 
+                    value= {smurf.name} 
+                    onChange = {onChange} 
+                />
+                <input 
+                    type='number' 
+                    placeholder = 'age' 
+                    name = 'age' 
+                    value= {smurf.age} 
+                    onChange = {onChange} 
+                />
+                <input 
+                    type='text' 
+                    placeholder = 'height' 
+                    name = 'height' 
+                    value= {smurf.height} 
+                    onChange = {onChange} 
+                />
                  <div>
-                     <button className = 'btnDiv' type = 'submit'>Submit</button>
+                     <button className = 'submit-button' type = 'submit'>Submit</button>
                  </div>
             </form>
 
