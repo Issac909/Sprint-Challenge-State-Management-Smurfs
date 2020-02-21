@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { reducer } from '../reducers';
+import { reducer } from './reducers';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import "./App.css";
 
-import SmurfsList from './SmurfList';
-import Header from './Header';
+import SmurfsList from './components/SmurfList';
+import Header from './components/Header';
 
 const store = createStore(
   reducer, 
   applyMiddleware (thunk, logger)
 )
-
 
 class App extends Component {
   render() {

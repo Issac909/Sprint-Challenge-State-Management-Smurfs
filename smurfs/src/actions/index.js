@@ -5,8 +5,11 @@ export const FETCH_SUCCESS = "FETCHING_SMURFS_SUCCESS"
 export const FETCH_FAILURE = "FETCHING_SMURFS_FAILURE"
 
 export const ADDING_SMURFS = "ADDING_SMURFS"
-export const ADDING_SMURF_SUCCESS = "ADDING_SMURF_SUCCESS"
-export const ADDING_SMURF_FAILURE = "ADDING_SMURF_FAILURE"
+export const ADD_SMURF_SUCCESS = "ADDING_SMURF_SUCCESS"
+export const ADD_SMURF_FAILURE = "ADDING_SMURF_FAILURE"
+
+export const TOGGLE_EDIT = "TOGGLE_EDIT"
+export const EDIT_SMURF = "EDIT_SMURF"
 
 
 export const fetchSmurfs = () => {
@@ -15,7 +18,6 @@ export const fetchSmurfs = () => {
         axios
         .get("http://localhost:3333/smurfs")
         .then(res => {
-            console.log('First axios call (GET)', res)
             dispatch({
                 type: FETCH_SUCCESS,
                 payload: res.data
@@ -37,13 +39,29 @@ export const addSmurfs = (smurf) => dispatch => {
     axios
         .post("http://localhost:3333/smurfs", smurf)
         .then(res => {
-            console.log('Second axios request (POST)', res)
             dispatch({
-                type: ADDING_SMURF_SUCCESS,
+                type: ADD_SMURF_SUCCESS,
                 payload: res.data
             })
         })
         .catch(err => 
-            dispatch( {type: ADDING_SMURF_FAILURE, payload: err}))
+            dispatch({
+                type: ADD_SMURF_FAILURE, 
+                payload: err
+            })
+        )
 
 } 
+
+export const editSmurf = () => dispatch => {
+    dispatch ({ type: TOGGLE_EDIT })
+    axios
+        .put(`http://localhost:3333/smurfs/:id`)
+        .then(res => {
+            dispatch({
+                type: EDIT_SMURF,
+                payload: res.data
+            })
+        })
+        .catch(err => console.log('Error with edit smurf', err))
+}

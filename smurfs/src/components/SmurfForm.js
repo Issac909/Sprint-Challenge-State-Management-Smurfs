@@ -24,12 +24,17 @@ function SmurfForm(props) {
     const onSubmit  = e => {
         e.preventDefault();
         props.addSmurf(smurf)
+        setSmurf({
+            name: '',
+            age: '',
+            height: ''
+        })
     }
 
     return (
-        <div>
-            <form onSubmit = {onSubmit}>
-                <h2>Add Smurf</h2>
+        <div className = 'form-container'>
+            <form className = 'form' onSubmit = {onSubmit}>
+                <h2>&#9660; Add Smurf &#9660;</h2>
                 <input 
                     type='text' 
                     placeholder = 'name' 

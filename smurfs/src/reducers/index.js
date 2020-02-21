@@ -1,14 +1,15 @@
-import { FETCHING_START, FETCH_SUCCESS, FETCH_FAILURE,ADDING_SMURFS, ADDING_SMURF_SUCCESS, ADDING_SMURF_FAILURE } from '../actions';
+import { FETCHING_START, FETCH_SUCCESS, FETCH_FAILURE,ADDING_SMURFS, ADD_SMURF_SUCCESS, ADD_SMURF_FAILURE, TOGGLE_EDIT, EDIT_SMURF } from '../actions';
 
 const initialState ={
-    smurf: [],
+    smurf: [{id:0}],
     isFetching: false,
-    error: ''
+    error: '',
+    editing: false
 }
 
-export const reducer = (state = initialState, action ) => {
-    console.log('State:', state)
-    switch( action.type ) {
+export const reducer = (state = initialState, {type, payload} ) => {
+    console.log('Inital State:', state)
+    switch(type) {
 
         case FETCHING_START:
             return {
@@ -20,15 +21,15 @@ export const reducer = (state = initialState, action ) => {
         case FETCH_SUCCESS:
             return {
                 error: '',
-                smurf: action.payload,
+                smurf: payload,
                 isFetching: false
             }
 
         case FETCH_FAILURE:
-            console.log(action.payload);
+            console.log(payload);
              return {
                  ...state,
-                 error: action.payload,
+                 error: payload,
                  isFetching: false
              };
 
@@ -38,17 +39,29 @@ export const reducer = (state = initialState, action ) => {
                 isFetching: true
             };
 
-        case ADDING_SMURF_SUCCESS:
+        case ADD_SMURF_SUCCESS:
             return {
                 isFetching: false,
-                smurf: action.payload
+                smurf: payload
             }
 
-        case ADDING_SMURF_FAILURE:
+        case ADD_SMURF_FAILURE:
             return {
                 ...state, 
-                error: action.payload
+                error: payload
             };
+        case TOGGLE_EDIT:
+            return {
+                ...state,
+                smurf: [...state.smurf],
+                editing: !state.editing
+            }
+        case EDIT_SMURF:
+            return {
+                ...state,
+                smurf:[{...state.smurf, id: payload}],
+                editing: false
+            }
 
         default: 
             return state;
